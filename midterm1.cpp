@@ -150,75 +150,106 @@ public:
         delete temp;
     }
 
+    // Adds a new node at the end of the list
     void push_back(int v) {
+        // Create new node
         Node* newNode = new Node(v);
+
+        // If list is empty
         if (!tail)
             head = tail = newNode;
         else {
+            // Attach new node after tail
             tail->next = newNode;
             newNode->prev = tail;
+            // Update tail
             tail = newNode;
         }
     }
-    
+
+    // Adds a new node at the beginning of the list
     void push_front(int v) {
+        // If list is empty
         Node* newNode = new Node(v);
+
+        // If list is empty
         if (!head)
             head = tail = newNode;
         else {
+            // Attach new node before head
             newNode->next = head;
             head->prev = newNode;
+            // Update head
             head = newNode;
         }
     }
     
+    // Removes the first node from the list
     void pop_front() {
-
+        // If empty, show message
         if (!head) {
             cout << "List is empty." << endl;
             return;
         }
 
+        // Store old head
         Node * temp = head;
 
+        // If more than one node exists
         if (head->next) {
             head = head->next;
             head->prev = nullptr;
         }
         else
+            // List becomes empty
             head = tail = nullptr;
+        // Free memory
         delete temp;
     }
-
+    
+    // Removes the last node from the list
     void pop_back() {
+        // If empty, show message
         if (!tail) {
             cout << "List is empty." << endl;
             return;
         }
+
+        // Store old tail
         Node * temp = tail;
 
+        // If more than one node exists
         if (tail->prev) {
             tail = tail->prev;
             tail->next = nullptr;
         }
         else
+            // List becomes empty
             head = tail = nullptr;
         delete temp;
     }
 
+    // Destructor to deletes all nodes to prevent memory leaks
     ~DoublyLinkedList() {
+        // Traverse and delete each node
         while (head) {
             Node* temp = head;
             head = head->next;
             delete temp;
         }
     }
+
+    // Prints the list from head to tail
     void print() {
         Node* current = head;
+
+        // If list is empty
         if (!current) {
             cout << "List is empty." << endl;
             return;
         }
+
+        // Traverse and print each node's data
         while (current) {
             cout << current->data << " ";
             current = current->next;
@@ -226,12 +257,15 @@ public:
         cout << endl;
     }
 
+    // Prints the list from tail to head
     void print_reverse() {
         Node* current = tail;
         if (!current) { 
             cout << "List is empty." << endl;
             return;
         }
+        
+        // Traverse backward and print
         while (current) {
             cout << current->data << " ";
             current = current->prev;
