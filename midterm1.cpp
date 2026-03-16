@@ -27,7 +27,7 @@ private:
 public:
     // Default constructor, initialize empty list
     DoublyLinkedList() { head = nullptr; tail = nullptr; }
-    
+
     // Insert a new node after given position
     void insert_after(int value, int position) {
         // Check if position is a valid non-negative number
@@ -58,51 +58,69 @@ public:
             return;
         }
 
+        // Link newNode to the next node
         newNode->next = temp->next;
+        // Link newNode back to temp
         newNode->prev = temp;
+        // If there is a next node, update its prev pointer
         if (temp->next)
             temp->next->prev = newNode;
+        // Otherwise, update tail to newNode
         else
             tail = newNode;
+        // Link temp to newNode
         temp->next = newNode;
     }
 
+    // Deletes the first node that contains the given value
     void delete_val(int value) {
+        // If list is empty, do nothing
         if (!head) return;
 
+        // Start from head to search for the value
         Node* temp = head;
         
+        // Traverse until value is found or list ends
         while (temp && temp->data != value)
             temp = temp->next;
 
+        // If value not found, do nothing
         if (!temp) return; 
 
+        // Update previous node's next pointer
         if (temp->prev)
             temp->prev->next = temp->next;
+        // If temp is head, move head forward
         else
             head = temp->next; 
-
+        // Update next node's prev pointer
         if (temp->next)
             temp->next->prev = temp->prev;
+        // If temp is tail, move tail backward
         else
             tail = temp->prev; 
-
+        // Free memory of the deleted node
         delete temp;
     }
-
+    
+    // Deletes the node at the given 1-based position
     void delete_pos(int pos) {
+        // If list is empty, display message and exit
         if (!head) {
             cout << "List is empty." << endl;
             return;
         }
-    
+        
+        // If deleting first position, call pop_front()
         if (pos == 1) {
             pop_front();
             return;
         }
-    
+        
+        // Temp pointer to traverse the list
         Node* temp = head;
-    
+        
+        // Move temp to the target position
         for (int i = 1; i < pos; i++){
             if (!temp) {
                 cout << "Position doesn't exist." << endl;
@@ -111,17 +129,22 @@ public:
             else
                 temp = temp->next;
         }
+
+        // If temp is null, position is invalid
         if (!temp) {
             cout << "Position doesn't exist." << endl;
             return;
         }
-    
+        
+        // If deleting last node, call pop_back()
         if (!temp->next) {
             pop_back();
             return;
         }
     
+        // Store pointer to previous node
         Node* tempPrev = temp->prev;
+        // Bypass the deleted node
         tempPrev->next = temp->next;
         temp->next->prev = tempPrev;
         delete temp;
