@@ -2,14 +2,18 @@
 #include <iostream>
 using namespace std;
 
+// Constant values
 const int MIN_NR = 10, MAX_NR = 99, MIN_LS = 5, MAX_LS = 20;
 
+//DLL class implementation
 class DoublyLinkedList {
 private:
+    // Node structure to store data and pointers
     struct Node {
-        int data;
-        Node* prev;
-        Node* next;
+        int data;                   // Stores integer value
+        Node* prev;                 // Pointer to the previous node
+        Node* next;                 // Pointer to the next node
+        // Constructor for Node, initializes value and pointers
         Node(int val, Node* p = nullptr, Node* n = nullptr) {
             data = val; 
             prev = p;
@@ -17,28 +21,37 @@ private:
         }
     };
 
-    Node* head;
-    Node* tail;
+    Node* head;                     // Pointer to the first node of the list
+    Node* tail;                     // Pointer to the last node of the list
 
 public:
+    // Default constructor, initialize empty list
     DoublyLinkedList() { head = nullptr; tail = nullptr; }
-
+    
+    // Insert a new node after given position
     void insert_after(int value, int position) {
+        // Check if position is a valid non-negative number
         if (position < 0) {
             cout << "Position must be >= 0." << endl;
             return;
         }
-
+        // Dynamically create a new node with the given value
         Node* newNode = new Node(value);
+
+        // If list is empty, set head and tail to the new node
         if (!head) {
             head = tail = newNode;
             return;
         }
 
+        // Create temporary pointer to traverse the list
         Node* temp = head;
+
+        // Move temp to the node at the target position
         for (int i = 0; i < position && temp; ++i)
             temp = temp->next;
 
+        // If position exceeds list size, cancel insertion
         if (!temp) {
             cout << "Position exceeds list size. Node not inserted.\n";
             delete newNode;
