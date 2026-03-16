@@ -264,7 +264,7 @@ public:
             cout << "List is empty." << endl;
             return;
         }
-        
+
         // Traverse backward and print
         while (current) {
             cout << current->data << " ";
@@ -272,10 +272,54 @@ public:
         }
         cout << endl;
     }
+
+    //New method every_other_element()
+    // Prints every other element starting from the first one 1st, 3rd, 5th...
+    void every_other_element() {
+        // Start at the head of the list
+        Node* current = head;
+
+        // Boolean flag to control printing, true = print, false = skip
+        bool print_flag = true;
+
+        // Traverse the entire list
+        while (current != nullptr) {
+            // If flag is true, print the current element
+            if (print_flag) {
+                cout << current->data << " ";
+            }
+
+            //switch between print and skip
+            print_flag = !print_flag;
+
+            // Move to the next node
+            current = current->next;
+        }
+
+        // Move to new line after output
+        cout << endl;
+    }
 };
 
 int main() {
-    cout << MIN_NR + MIN_LS + MAX_NR + MAX_LS;  // dummy statement to avoid compiler warning
+    // Create a doubly linked list object
+    DoublyLinkedList list;
+
+    // Add test values to the list
+    list.push_back(1);
+    list.push_back(2);
+    list.push_back(3);
+    list.push_back(4);
+    list.push_back(5);
+    list.push_back(6);
+
+    // Display original list
+    cout << "Original list: ";
+    list.print();
+
+    // Display every other element
+    cout << "Every other element: ";
+    list.every_other_element();
 
     
     return 0;
